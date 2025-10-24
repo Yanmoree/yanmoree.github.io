@@ -95,6 +95,13 @@ const Profile = () => {
               </div>
             </div>
 
+            <Button onClick={() => navigate("/profile/edit")} className="w-full">
+              Редактировать профиль
+            </Button>
+
+            <div className="pt-4 border-t">
+            </div>
+
             <div className="pt-4 border-t">
               <Button variant="destructive" onClick={signOut} className="w-full sm:w-auto">
                 <LogOut className="mr-2 h-4 w-4" />

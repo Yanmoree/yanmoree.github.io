@@ -10,9 +10,12 @@ import Catalog from "./pages/Catalog";
 import Cart from "./pages/Cart";
 import Support from "./pages/Support";
 import Profile from "./pages/Profile";
+import ProfileEdit from "./pages/ProfileEdit";
 import Admin from "./pages/Admin";
 import Auth from "./pages/Auth";
 import NotFound from "./pages/NotFound";
+import EmployeeChat from "./pages/EmployeeChat";
+import ChatBot from "./components/ChatBot";
 
 const queryClient = new QueryClient();
 
@@ -32,11 +35,14 @@ const App = () => (
                 <Route path="/cart" element={<Cart />} />
                 <Route path="/support" element={<Support />} />
                 <Route path="/profile" element={<Profile />} />
+                <Route path="/profile/edit" element={<ProfileEdit />} />
+                <Route path="/employee-chat" element={<EmployeeChat />} />
                 <Route path="/admin" element={<Admin />} />
                 <Route path="/auth" element={<Auth />} />
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                 <Route path="*" element={<NotFound />} />
               </Routes>
+              <ChatBot />
             </main>
           </div>
         </AuthProvider>
