@@ -8,6 +8,7 @@ interface AuthContextType {
   user: User | null;
   session: Session | null;
   isAdmin: boolean;
+  isEmployee: boolean;
   loading: boolean;
   signUp: (email: string, password: string, fullName: string) => Promise<void>;
   signIn: (email: string, password: string) => Promise<void>;
@@ -20,6 +21,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [session, setSession] = useState<Session | null>(null);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [isEmployee, setIsEmployee] = useState(false);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
@@ -32,9 +34,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         if (session?.user) {
           setTimeout(() => {
             checkAdminStatus(session.user.id);
+            checkEmployeeStatus(session.user.id);
           }, 0);
         } else {
           setIsAdmin(false);
+          setIsEmployee(false);
         }
       }
     );
@@ -44,6 +48,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       setUser(session?.user ?? null);
       if (session?.user) {
         checkAdminStatus(session.user.id);
+        checkEmployeeStatus(session.user.id);
       }
       setLoading(false);
     });
@@ -68,6 +73,27 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     } catch (error) {
       console.error("Error checking admin status:", error);
       setIsAdmin(false);
+    }
+  };
+
+  const checkEmployeeStatus = async (userId: string) => {
+    try {
+      const { data, error } = await supabase
+        .from("user_roles")
+        .select("role")
+        .eq("user_id", userId);
+
+      if (!error && data) {
+        const hasEmployeeRole = data.some(
+          (r) => r.role === "employee" || r.role === "admin"
+        );
+        setIsEmployee(hasEmployeeRole);
+      } else {
+        setIsEmployee(false);
+      }
+    } catch (error) {
+      console.error("Error checking employee status:", error);
+      setIsEmployee(false);
     }
   };
 
@@ -112,6 +138,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       const { error } = await supabase.auth.signOut();
       if (error) throw error;
       setIsAdmin(false);
+      setIsEmployee(false);
       toast.success("Вы вышли из системы");
       navigate("/auth");
     } catch (error: any) {
@@ -120,7 +147,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, session, isAdmin, loading, signUp, signIn, signOut }}>
+    <AuthContext.Provider value={{ user, session, isAdmin, isEmployee, loading, signUp, signIn, signOut }}>
       {children}
     </AuthContext.Provider>
   );

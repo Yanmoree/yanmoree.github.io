@@ -1,5 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
-import { ShoppingCart, User, Package, Mail, Home, Shield } from "lucide-react";
+import { ShoppingCart, User, Package, Mail, Home, Shield, MessageSquare } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
 import { Badge } from "@/components/ui/badge";
@@ -8,7 +8,7 @@ import { supabase } from "@/integrations/supabase/client";
 
 const Navbar = () => {
   const location = useLocation();
-  const { user, isAdmin, signOut } = useAuth();
+  const { user, isAdmin, isEmployee, signOut } = useAuth();
 
   const { data: cartCount } = useQuery({
     queryKey: ["cartCount", user?.id],
@@ -93,6 +93,18 @@ const Navbar = () => {
               >
                 <Shield className="h-4 w-4" />
                 <span className="hidden sm:inline">Админ</span>
+              </Button>
+            </Link>
+          )}
+
+          {isEmployee && (
+            <Link to="/employee-chat">
+              <Button
+                variant={isActive("/employee-chat") ? "default" : "ghost"}
+                className="gap-2"
+              >
+                <MessageSquare className="h-4 w-4" />
+                <span className="hidden sm:inline">Чаты</span>
               </Button>
             </Link>
           )}
