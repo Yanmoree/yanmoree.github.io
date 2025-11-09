@@ -116,6 +116,7 @@ export type Database = {
           category: string | null
           created_at: string | null
           description: string | null
+          detailed_description: string | null
           id: string
           image_url: string | null
           name: string
@@ -127,6 +128,7 @@ export type Database = {
           category?: string | null
           created_at?: string | null
           description?: string | null
+          detailed_description?: string | null
           id?: string
           image_url?: string | null
           name: string
@@ -138,6 +140,7 @@ export type Database = {
           category?: string | null
           created_at?: string | null
           description?: string | null
+          detailed_description?: string | null
           id?: string
           image_url?: string | null
           name?: string
@@ -153,6 +156,7 @@ export type Database = {
           avatar_url: string | null
           bio: string | null
           city: string | null
+          company: string | null
           created_at: string | null
           date_of_birth: string | null
           email: string | null
@@ -167,6 +171,7 @@ export type Database = {
           avatar_url?: string | null
           bio?: string | null
           city?: string | null
+          company?: string | null
           created_at?: string | null
           date_of_birth?: string | null
           email?: string | null
@@ -181,6 +186,7 @@ export type Database = {
           avatar_url?: string | null
           bio?: string | null
           city?: string | null
+          company?: string | null
           created_at?: string | null
           date_of_birth?: string | null
           email?: string | null

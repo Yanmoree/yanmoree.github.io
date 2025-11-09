@@ -13,11 +13,13 @@ import { Loader2, Upload, ArrowLeft } from "lucide-react";
 import { z } from "zod";
 
 const profileSchema = z.object({
-  full_name: z.string().min(1, "Имя обязательно").max(100),
+  full_name: z.string().min(1, "ФИО обязательно").max(100),
   phone: z.string().max(20).optional(),
+  email: z.string().email("Некорректный email").optional(),
   address: z.string().max(200).optional(),
   city: z.string().max(100).optional(),
   postal_code: z.string().max(20).optional(),
+  company: z.string().max(200).optional(),
   date_of_birth: z.string().optional(),
   bio: z.string().max(500).optional(),
 });
@@ -32,9 +34,11 @@ const ProfileEdit = () => {
   const [formData, setFormData] = useState({
     full_name: "",
     phone: "",
+    email: "",
     address: "",
     city: "",
     postal_code: "",
+    company: "",
     date_of_birth: "",
     bio: "",
   });
@@ -73,9 +77,11 @@ const ProfileEdit = () => {
       setFormData({
         full_name: data.full_name || "",
         phone: data.phone || "",
+        email: data.email || "",
         address: data.address || "",
         city: data.city || "",
         postal_code: data.postal_code || "",
+        company: data.company || "",
         date_of_birth: data.date_of_birth || "",
         bio: data.bio || "",
       });
@@ -236,32 +242,35 @@ const ProfileEdit = () => {
 
               <div className="space-y-4">
                 <div>
-                  <Label htmlFor="full_name">Полное имя *</Label>
+                  <Label htmlFor="full_name">ФИО *</Label>
                   <Input
                     id="full_name"
                     value={formData.full_name}
                     onChange={(e) => setFormData({ ...formData, full_name: e.target.value })}
                     required
+                    placeholder="Иванов Иван Иванович"
                   />
                 </div>
 
                 <div>
-                  <Label htmlFor="email">Email</Label>
-                  <Input
-                    id="email"
-                    value={user.email || ""}
-                    disabled
-                    className="bg-muted"
-                  />
-                </div>
-
-                <div>
-                  <Label htmlFor="phone">Телефон</Label>
+                  <Label htmlFor="phone">Номер телефона</Label>
                   <Input
                     id="phone"
                     type="tel"
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                    placeholder="+7 (999) 123-45-67"
+                  />
+                </div>
+
+                <div>
+                  <Label htmlFor="email">Почта</Label>
+                  <Input
+                    id="email"
+                    type="email"
+                    value={formData.email}
+                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    placeholder="example@mail.com"
                   />
                 </div>
 
@@ -271,6 +280,7 @@ const ProfileEdit = () => {
                     id="city"
                     value={formData.city}
                     onChange={(e) => setFormData({ ...formData, city: e.target.value })}
+                    placeholder="Москва"
                   />
                 </div>
 
@@ -280,15 +290,17 @@ const ProfileEdit = () => {
                     id="address"
                     value={formData.address}
                     onChange={(e) => setFormData({ ...formData, address: e.target.value })}
+                    placeholder="Улица, дом, квартира"
                   />
                 </div>
 
                 <div>
-                  <Label htmlFor="postal_code">Почтовый индекс</Label>
+                  <Label htmlFor="company">Компания</Label>
                   <Input
-                    id="postal_code"
-                    value={formData.postal_code}
-                    onChange={(e) => setFormData({ ...formData, postal_code: e.target.value })}
+                    id="company"
+                    value={formData.company}
+                    onChange={(e) => setFormData({ ...formData, company: e.target.value })}
+                    placeholder="Название компании"
                   />
                 </div>
 

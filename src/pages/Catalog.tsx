@@ -125,8 +125,9 @@ const Catalog = () => {
         {filteredProducts?.map((product, index) => (
           <Card
             key={product.id}
-            className="group overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-2 animate-fade-in-up"
+            className="group overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-2 animate-fade-in-up cursor-pointer"
             style={{ animationDelay: `${index * 50}ms` }}
+            onClick={() => navigate(`/product/${product.id}`)}
           >
             <div className="relative overflow-hidden h-48 bg-gradient-to-br from-muted to-muted/50">
               {product.image_url && (
@@ -161,7 +162,10 @@ const Catalog = () => {
             <CardFooter>
               <Button
                 className="w-full group"
-                onClick={() => addToCart(product.id)}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  addToCart(product.id);
+                }}
                 disabled={product.stock === 0}
               >
                 <ShoppingCart className="mr-2 h-4 w-4 transition-transform group-hover:scale-110" />

@@ -11,6 +11,7 @@ import Cart from "./pages/Cart";
 import Support from "./pages/Support";
 import Profile from "./pages/Profile";
 import ProfileEdit from "./pages/ProfileEdit";
+import ProductDetail from "./pages/ProductDetail";
 import Admin from "./pages/Admin";
 import Auth from "./pages/Auth";
 import NotFound from "./pages/NotFound";
@@ -32,6 +33,7 @@ const App = () => (
               <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/catalog" element={<Catalog />} />
+                <Route path="/product/:id" element={<ProductDetail />} />
                 <Route path="/cart" element={<Cart />} />
                 <Route path="/support" element={<Support />} />
                 <Route path="/profile" element={<Profile />} />

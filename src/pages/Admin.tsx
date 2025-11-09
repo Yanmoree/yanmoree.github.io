@@ -17,6 +17,7 @@ interface Product {
   id: string;
   name: string;
   description: string | null;
+  detailed_description: string | null;
   price: number;
   image_url: string | null;
   category: string | null;
@@ -32,6 +33,7 @@ const Admin = () => {
   const [formData, setFormData] = useState({
     name: "",
     description: "",
+    detailed_description: "",
     price: "",
     image_url: "",
     category: "",
@@ -104,6 +106,7 @@ const Admin = () => {
     setFormData({
       name: "",
       description: "",
+      detailed_description: "",
       price: "",
       image_url: "",
       category: "",
@@ -118,6 +121,7 @@ const Admin = () => {
     setFormData({
       name: product.name,
       description: product.description || "",
+      detailed_description: product.detailed_description || "",
       price: product.price.toString(),
       image_url: product.image_url || "",
       category: product.category || "",
@@ -132,6 +136,7 @@ const Admin = () => {
     const productData = {
       name: formData.name,
       description: formData.description || null,
+      detailed_description: formData.detailed_description || null,
       price: parseFloat(formData.price),
       image_url: formData.image_url || null,
       category: formData.category || null,
@@ -194,12 +199,21 @@ const Admin = () => {
                   </div>
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="description">Описание</Label>
+                  <Label htmlFor="description">Краткое описание</Label>
                   <Textarea
                     id="description"
                     value={formData.description}
                     onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                    rows={3}
+                    rows={2}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="detailed_description">Подробное описание</Label>
+                  <Textarea
+                    id="detailed_description"
+                    value={formData.detailed_description}
+                    onChange={(e) => setFormData({ ...formData, detailed_description: e.target.value })}
+                    rows={4}
                   />
                 </div>
                 <div className="grid gap-4 sm:grid-cols-2">
